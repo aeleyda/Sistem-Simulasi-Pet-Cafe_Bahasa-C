@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    char name[50];
+    int energy;
+    int loves;
+} Employee;
+
+typedef struct {
+    char name[50];
+    int energy;
+    int loves;
+} Pet;
+
+void petting(Pet *pet) {
+    pet->loves += 10;
+    printf("You are gaining %s’s loves.\n", pet->name);
+}
+
+void displayAttributes(Employee *employee, Pet *pet, char *name) {
+    if (strcmp(employee->name, name) == 0) {
+        printf("%s’s Energy: %d\n", employee->name, employee->energy);
+        printf("%s’s Loves: %d\n", employee->name, employee->loves);
+    } else if (strcmp(pet->name, name) == 0) {
+        printf("%s’s Energy: %d\n", pet->name, pet->energy);
+        printf("%s’s Loves: %d\n", pet->name, pet->loves);
+    } else {
+        printf("Character not found.\n");
+    }
+}
+
+void runCommand(Employee *employee, Pet *pet, char *command, char *name) {
+    if (strcmp(command, "PETTING") == 0 && strcmp(name, pet->name) == 0) {
+        petting(pet);
+    } else if (strcmp(command, "ATTR") == 0) {
+        displayAttributes(employee, pet, name);
+    } else {
+        printf("Invalid command.\n");
+    }
+}
+
+int main() {
+    Employee employee = {"Diane", 80, 50};
+    Pet pet = {"Caty", 60, 70};
+    char command[50], name[50];
+
+    printf("Menu: \n");
+    printf("Type>>\n");
+    printf("1. PETTING <name>\n");
+    printf("2. ATTR <name>\n");
+    printf("3. EXIT\n");
+
+
+    // Loop sistem simulasi
+    while (1) {
+        printf("Choose your act: ");
+        scanf("%s %s", command, name);
+
+        if (strcmp(command, "EXIT") == 0) {
+            break;
+        }
+
+        runCommand(&employee, &pet, command, name);
+    }
+    return 0;
+}
